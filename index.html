@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un mensaje especial para Michelle</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            /* Cambiamos el fondo al del primer código */
+            background: linear-gradient(135deg, #f6d5f7, #fbe9d7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.5s;
+            overflow: hidden;
+        }
+
+        /* Removemos el fondo del container para que se vean los corazones */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.85); /* Hacemos más transparente el fondo */
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative; /* Para que los corazones pasen por detrás */
+            z-index: 1; /* Para que los corazones pasen por detrás */
+        }
+
+        /* Estilos de corazones - ajustados para verse en toda la página */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            animation: float 4s ease-in infinite;
+            opacity: 0.8; /* Hacemos los corazones un poco transparentes */
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .stage {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .stage.active {
+            display: block;
+        }
+
+        .image-container {
+            margin: 20px auto;
+            max-width: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1, h2 {
+            color: #4a4a4a;
+            margin-bottom: 1.5rem;
+        }
+
+        .button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 25px;
+            /* Cambiamos el color de los botones para que coincida con el tema */
+            background: linear-gradient(45deg, #e84393, #fd79a8);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(232, 67, 147, 0.2);
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(232, 67, 147, 0.3);
+        }
+
+        .message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            color: #666;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .music-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 50px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .music-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #e84393;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .final-message {
+            display: none;
+            white-space: pre-line;
+            text-align: left;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a4a4a;
+        }
+
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            animation: sparkleAnim 1s linear forwards;
+            z-index: 2;
+        }
+
+        @keyframes sparkleAnim {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(180deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <!-- Resto del código HTML igual que antes -->
+    <div class="container">
+        <!-- Pantalla inicial -->
+        <div class="stage active" id="stage1">
+            <h1>Hola Michelle</h1>
+            <p class="message">Tengo algo especial para ti, pero primero...</p>
+            <div class="image-container">
+                <img src="assets/img/WhatsApp Image 2024-11-10 at 16.45.48 (1).jpeg"Inicio">
+            </div>
+            <button class="button" onclick="nextStage('stage2')">¿Comenzamos?</button>
+        </div>
+
+        <!-- Primera pregunta -->
+        <div class="stage" id="stage2">
+            <h2>¿Recuerdas dónde nos conocimos?</h2>
+            <div class="image-container">
+                <img src="assets/img/WhatsApp Image 2024-11-10 at 17.46.31.jpeg" alt="Música">
+            </div>
+            <div class="options">
+                <button class="button" onclick="checkAnswer('stage2', false)">En el patio</button>
+                <button class="button" onclick="checkAnswer('stage2', true)">En el curso de música</button>
+                <button class="button" onclick="checkAnswer('stage2', false)">En la biblioteca</button>
+            </div>
+        </div>
+
+        <!-- Segunda pregunta -->
+        <div class="stage" id="stage3">
+            <h2>Y ese día fue...</h2>
+            <div class="image-container">
+                <img src="assets/img/WhatsApp Image 2024-11-10 at 16.45.47.jpeg" alt="Calendario">
+            </div>
+            <div class="options">
+                <button class="button" onclick="checkAnswer('stage3', false)">15 de mayo</button>
+                <button class="button" onclick="checkAnswer('stage3', true)">25 de junio</button>
+                <button class="button" onclick="checkAnswer('stage3', false)">10 de julio</button>
+            </div>
+        </div>
+
+        <!-- Tercera pregunta -->
+        <div class="stage" id="stage4">
+            <h2>¿Qué es lo que más valoro de nuestra amistad?</h2>
+            <div class="image-container">
+                <img src="assets/img/WhatsApp Image 2024-11-10 at 16.46.33.jpeg" alt="Amistad">
+            </div>
+            <div class="options">
+                <button class="button" onclick="checkAnswer('stage4', false)">Los recreos juntos</button>
+                <button class="button" onclick="checkAnswer('stage4', false)">Las risas compartidas</button>
+                <button class="button" onclick="checkAnswer('stage4', true)">Tu confianza y fortaleza</button>
+            </div>
+        </div>
+
+        <!-- Mensaje final -->
+        <div class="stage" id="finalStage">
+            <h2>Michelle...</h2>
+            <div class="final-message" id="finalMessage"></div>
+            <button class="button" onclick="replayGame()">Volver a empezar</button>
+        </div>
+    </div>
+
+    <div class="music-controls">
+        <button class="music-btn" onclick="toggleMusic()">🎵</button>
+        <audio id="bgMusic" loop>
+            <source src="assets/music/Hombres G - Te quiero (Audio Oficial).mp3" type="audio/mp3">
+            <source src="assets/music/d4vd - Here With Me [Official Music Video] - d4vdVEVO (youtube).mp3" type="audio/mp3">
+        </audio>
+    </div>
+
+    <script>
+        const finalMessageText = `Querida Michelle Nazareno,
+
+Aquel 25 de junio en el curso de música, el destino me permitió conocer a alguien extraordinario. Aunque fue un simple día para muchos, para mí se convirtió en uno de los días más especiales de este año. Cada momento contigo, cada recreo compartido, cada abrazo y cada vez que estamos tomados de la mano, se han vuelto momentos que atesoro muchísimo.
+
+Admiro profundamente tu fortaleza. Eres una de las personas más valientes y maravillosas que conozco. A pesar de todo lo que has vivido, sigues siendo una persona increíblemente amable y linda. Tu capacidad de seguir adelante me inspira todos los días.
+
+Sé que a veces la vida no es justa y que has pasado por momentos muy difíciles. Quiero que sepas que estoy aquí para ti, para escucharte, para apoyarte, para compartir juntos los buenos momentos, alegrías y también para estar en los momentos tristes o difíciles. No estás sola.
+
+Gracias por confiar en mí, por compartir conmigo tus preocupaciones y por dejarme ser parte de tu vida. Gracias por apoyarme también cuando lo he necesitado. Nuestra amistad significa muchísimo para mí.
+
+Quizás no siempre sé encontrar las palabras correctas para ayudarte o consolarte, pero mi corazón está contigo y puedes contar conmigo siempre que me necesites.
+
+Eres especial, eres valiosa, y mereces todo lo bueno que la vida tiene para ofrecer. Nunca dudes de eso.
+
+Con mucho cariño,
+Tu mejor amigo Samuel Ortiz`;
+
+        // Función para crear corazones
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            document.getElementById('hearts').appendChild(heart);
+
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+
+        // Crear corazones cada 300ms
+        setInterval(createHeart, 300);
+
+        function nextStage(stageId) {
+            document.querySelector('.stage.active').classList.remove('active');
+            document.getElementById(stageId).classList.add('active');
+        }
+
+        function checkAnswer(stageId, correct) {
+            if (correct) {
+                createSparkles(event);
+                const nextStageNum = parseInt(stageId.replace('stage', '')) + 1;
+                const nextStageId = nextStageNum === 5 ? 'finalStage' : 'stage' + nextStageNum;
+                
+                if (nextStageId === 'finalStage') {
+                    showFinalMessage();
+                }
+                
+                nextStage(nextStageId);
+            } else {
+                alert('¡Intenta de nuevo! Sé que lo sabes 😊');
+            }
+        }
+
+        function showFinalMessage() {
+            const messageDiv = document.getElementById('finalMessage');
+            messageDiv.style.display = 'block';
+            messageDiv.textContent = '';
+            let index = 0;
+            const interval = setInterval(() => {
+                if (index < finalMessageText.length) {
+                    messageDiv.textContent += finalMessageText[index];
+                    index++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 50);
+        }
+
+        function replayGame() {
+            document.querySelector('.stage.active').classList.remove('active');
+            document.getElementById('stage1').classList.add('active');
+            document.getElementById('finalMessage').textContent = '';
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+
+        function createSparkles(event) {
+            for (let i = 0; i < 10; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.innerHTML = '✨';
+                sparkle.style.left = event.pageX + 'px';
+                sparkle.style.top = event.pageY + 'px';
+                sparkle.style.fontSize = Math.random() * 20 + 10 + 'px';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        }
+    </script>
+</body>
+</html>
